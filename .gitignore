@@ -1,0 +1,13 @@
+*.iml
+/local.properties
+
+# ignore all build directories
+**/build
+
+/captures
+
+# ignore all . files and . folders
+.*
+
+# Dont ignore .gitignore (this file)
+!/.gitignore

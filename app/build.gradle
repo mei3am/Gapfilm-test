@@ -1,0 +1,133 @@
+buildscript {
+    repositories {
+        google()
+        mavenLocal()
+        maven {
+            url 'https://maven.google.com/'
+            name 'Google'
+        }
+        jcenter()
+
+        flatDir {
+            dirs 'libs'
+        }
+        mavenCentral()
+    }
+}
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-parcelize'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'androidx.navigation.safeargs.kotlin'
+
+def version_name = "1.0"
+def version_code = 1
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.3"
+
+    defaultConfig {
+        applicationId "com.github.mei3am.test"
+        minSdkVersion 17
+        targetSdkVersion 29
+        versionCode version_code
+        versionName version_name
+
+        multiDexEnabled true
+
+        vectorDrawables.useSupportLibrary = true
+        buildFeatures {
+            dataBinding = true
+        }
+        testOptions {
+            animationsDisabled = true
+        }
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_1_8
+            targetCompatibility JavaVersion.VERSION_1_8
+        }
+        kotlinOptions {
+            jvmTarget = "1.8"
+        }
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    setProperty("archivesBaseName", "App-" + version_name + "-BuildNumber-" + version_code)
+    buildTypes {
+        debug {
+            versionNameSuffix "-DEV"
+            debuggable true
+        }
+        release {
+            debuggable false
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'androidx.core:core-ktx:1.3.2'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+
+    implementation 'androidx.fragment:fragment-ktx:1.3.0'
+    kapt "androidx.databinding:databinding-compiler:4.1.2"
+    implementation 'com.google.android.material:material:1.3.0'
+
+    //calligraphy v3
+    implementation 'io.github.inflationx:calligraphy3:3.1.1'
+    implementation 'io.github.inflationx:viewpump:2.0.3'
+
+    implementation 'androidx.exifinterface:exifinterface:1.3.2'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+
+    // ViewModel and LiveData
+    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
+    implementation "androidx.lifecycle:lifecycle-common-java8:2.3.0"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.3.0"
+
+    // dagger
+    implementation 'com.google.dagger:dagger:2.29.1'
+    kapt "com.google.dagger:dagger-compiler:2.29.1"
+    implementation 'com.google.dagger:dagger-android-support:2.29.1'
+    kapt 'com.google.dagger:dagger-android-processor:2.29.1'
+
+    //retrofit
+    implementation 'com.squareup.retrofit2:converter-gson:2.6.4'
+    // must keep 2.6.x to support all android versions
+    implementation 'com.squareup.retrofit2:retrofit:2.6.4'
+    // must keep 2.6.x to support all android versions
+
+    //ok http
+    implementation 'com.squareup.okhttp3:okhttp:3.12.12'
+    // must keep 3.12.x to support all android versions
+    implementation "com.squareup.okhttp3:logging-interceptor:3.12.12"
+    // must keep 3.12.x to support all android versions
+
+    //coroutines
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.2'
+
+    //timber
+    implementation 'com.jakewharton.timber:timber:4.7.1'
+
+    // room
+    implementation 'androidx.room:room-runtime:2.2.6'
+    kapt 'androidx.room:room-compiler:2.2.6'
+
+    //navigation
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+
+    // glide
+    implementation 'com.github.bumptech.glide:glide:4.12.0'
+    kapt 'com.github.bumptech.glide:compiler:4.12.0'
+}
