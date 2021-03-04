@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">test</string>
+    <string name="contents">محتوا</string>
+    <string name="favorites">علاقه‌مندی‌ها</string>
 </resources>
