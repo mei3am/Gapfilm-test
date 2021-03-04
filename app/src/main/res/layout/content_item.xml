@@ -1,6 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:bind="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="thumbImage"
+            type="String" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:layout_marginTop="8dp"
+        android:foreground="?attr/selectableItemBackground">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageView
+            android:id="@+id/ic_image"
+            android:layout_width="80dp"
+            android:layout_height="0dp"
+            android:adjustViewBounds="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            bind:imageUrl="@{thumbImage}"
+            app:layout_constraintDimensionRatio="H,16:9"
+            android:background="@color/placeHolderColor"/>
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/ic_image"
+            app:layout_constraintEnd_toStartOf="@+id/ic_image"
+            app:layout_constraintTop_toTopOf="@+id/ic_image"
+            android:layout_marginEnd="8dp"
+            android:textColor="@color/textPrimary"/>
+
+        <TextView
+            android:id="@+id/tv_zone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:textColor="@color/textSecondary"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
