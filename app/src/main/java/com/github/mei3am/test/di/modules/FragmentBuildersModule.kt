@@ -1,5 +1,6 @@
 package com.github.mei3am.test.di.modules
 
+import com.github.mei3am.test.view.fragments.ContentDetailsFragment
 import com.github.mei3am.test.view.fragments.ContentsFragment
 import com.github.mei3am.test.view.fragments.FavoriteFragment
 import dagger.Module
@@ -19,8 +20,8 @@ abstract class FragmentBuildersModule{
     @ContributesAndroidInjector
     abstract fun contributeFavoriteFragment(): FavoriteFragment
 
-//    @ContributesAndroidInjector
-//    abstract fun contribute():
+    @ContributesAndroidInjector
+    abstract fun contributeContentDetailsFragment(): ContentDetailsFragment
 
 
 }

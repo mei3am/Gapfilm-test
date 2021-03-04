@@ -10,6 +10,18 @@
         android:name="com.github.mei3am.test.view.fragments.MainFragment"
         android:label="MainFragment"
         tools:layout="@layout/main_fragment">
+        <action
+            android:id="@+id/showContentDetailsFragment"
+            app:destination="@id/contentDetailsFragment"/>
+    </fragment>
 
+    <fragment
+        android:id="@+id/contentDetailsFragment"
+        android:name="com.github.mei3am.test.view.fragments.ContentDetailsFragment"
+        android:label="ContentDetailsFragment"
+        tools:layout="@layout/content_details_fragment">
+        <argument
+            app:argType="integer"
+            android:name="contentId"/>
     </fragment>
 </navigation>

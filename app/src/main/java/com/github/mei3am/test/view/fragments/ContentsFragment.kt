@@ -35,7 +35,7 @@ class ContentsFragment: Fragment(), Injectable {
     private val viewModel: ContentsViewModel by viewModels {
         viewModelFactory
     }
-    val dataBindingComponent: DataBindingComponent = FragmentDataBindingComponent(this)
+    private val dataBindingComponent: DataBindingComponent = FragmentDataBindingComponent(this)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -54,6 +54,9 @@ class ContentsFragment: Fragment(), Injectable {
         }else{
             adapter.submitList(viewModel.contentList)
         }
+        findNavController().navigate(
+                MainFragmentDirections.
+                showContentDetailsFragment(contentId = 1))
     }
 
     private fun initRv(){
@@ -61,7 +64,9 @@ class ContentsFragment: Fragment(), Injectable {
             dataBindingComponent = dataBindingComponent,
             appExecutors = appExecutors,
         ) { content ->
-
+            findNavController().navigate(
+                MainFragmentDirections.
+                showContentDetailsFragment(contentId = content.contentId))
         }
         binding.rvContent.adapter = rvAdapter
         this.adapter = rvAdapter

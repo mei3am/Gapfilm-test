@@ -6,10 +6,7 @@ import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
 import com.github.mei3am.test.di.ViewModelKey
-import com.github.mei3am.test.viewModel.AppViewModelFactory
-import com.github.mei3am.test.viewModel.ContentsViewModel
-import com.github.mei3am.test.viewModel.FavoriteViewModel
-import com.github.mei3am.test.viewModel.MainViewModel
+import com.github.mei3am.test.viewModel.*
 
 @Suppress("unused")
 @Module
@@ -30,10 +27,10 @@ abstract class ViewModelModule {
     @ViewModelKey(FavoriteViewModel::class)
     abstract fun bindFavoriteViewModel(viewModel: FavoriteViewModel): ViewModel
 
-//    @Binds
-//    @IntoMap
-//    @ViewModelKey(::class)
-//    abstract fun bind(viewModel: ): ViewModel
+    @Binds
+    @IntoMap
+    @ViewModelKey(ContentsDetailsViewModel::class)
+    abstract fun bindContentsDetailsViewModel(viewModel: ContentsDetailsViewModel): ViewModel
 
     @Binds
     abstract fun bindViewModelFactory(factory: AppViewModelFactory): ViewModelProvider.Factory
