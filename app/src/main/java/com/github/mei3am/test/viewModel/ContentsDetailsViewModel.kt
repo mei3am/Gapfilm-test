@@ -32,7 +32,6 @@ class ContentsDetailsViewModel @Inject constructor(private val appService: AppSe
                 emit(Resource.error(data = null, message = null))
             }
         } catch (exception: Exception) {
-            Klog.e(exception)
             emit(Resource.error(data = null, message = null))
         }
     }
@@ -43,7 +42,6 @@ class ContentsDetailsViewModel @Inject constructor(private val appService: AppSe
             appDb.billBasketDao().delete(contentId)
             emit(Resource.success(null))
         } catch (exception: Exception) {
-            Klog.e(exception)
             emit(Resource.error(data = null, message = null))
         }
     }

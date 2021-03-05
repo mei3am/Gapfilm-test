@@ -138,7 +138,6 @@ class ContentsFragment: Fragment(), Injectable {
                         adapter.notifyItemChanged(position, content)
                     }
                     Status.ERROR -> {
-                        toast(R.string.error)
                     }
                     Status.LOADING -> {
                     }
@@ -157,7 +156,6 @@ class ContentsFragment: Fragment(), Injectable {
                         adapter.notifyItemChanged(position, content)
                     }
                     Status.ERROR -> {
-                        toast(R.string.error)
                     }
                     Status.LOADING -> {
                     }
@@ -172,13 +170,11 @@ class ContentsFragment: Fragment(), Injectable {
                 when (resource.status) {
                     Status.SUCCESS -> {
                         adapter.submitList(viewModel.contentList)
-                        Klog.e("changed list "+resource.data)
                         resource.data?.forEach { changedPosition ->
                             adapter.notifyItemChanged(changedPosition)
                         }
                     }
                     Status.ERROR -> {
-                        toast(R.string.error)
                     }
                     Status.LOADING -> {
                     }

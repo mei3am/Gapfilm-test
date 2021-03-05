@@ -22,10 +22,7 @@ class FavoriteViewModel @Inject constructor(private val appDb: AppDb): ViewModel
             emit(Resource.success(response))
             contentList.removeAll(contentList)
             contentList.addAll(response!!)
-            Klog.e(contentList)
-            Klog.e(response)
         } catch (exception: Exception) {
-            Klog.e(exception)
             emit(Resource.error(data = null, message = null))
         }
     }
@@ -37,7 +34,6 @@ class FavoriteViewModel @Inject constructor(private val appDb: AppDb): ViewModel
             contentList.removeAt(position)
             emit(Resource.success(contentList))
         } catch (exception: Exception) {
-            Klog.e(exception)
             emit(Resource.error(data = null, message = null))
         }
     }

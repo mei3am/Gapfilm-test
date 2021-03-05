@@ -110,7 +110,6 @@ class FavoriteFragment: Fragment(), Injectable {
                         adapter.notifyItemRemoved(position)
                     }
                     Status.ERROR -> {
-                        toast(R.string.error)
                     }
                     Status.LOADING -> {
                     }

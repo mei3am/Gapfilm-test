@@ -95,7 +95,6 @@ class ContentsViewModel @Inject constructor(private val appService: AppServices,
                 emit(Resource.success(listOfChanges))
             }
         } catch (exception: Exception) {
-            exception.printStackTrace()
             Klog.e(exception)
             emit(Resource.error(data = null, message = null))
         }

@@ -5,5 +5,4 @@
     <string name="series">سریال</string>
     <string name="movie">فیلم</string>
     <string name="error_in_connection">خطا در برقراری ارتباط</string>
-    <string name="error">خطا</string>
 </resources>
