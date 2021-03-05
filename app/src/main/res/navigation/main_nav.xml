@@ -23,5 +23,11 @@
         <argument
             app:argType="integer"
             android:name="contentId"/>
+        <argument
+            app:argType="integer"
+            android:name="position"/>
+        <argument
+            app:argType="boolean"
+            android:name="favorite"/>
     </fragment>
 </navigation>

@@ -41,7 +41,7 @@ data class FilesItem(
 	val quality: Int? = null,
 
 	@field:SerializedName("Size")
-	val size: Int? = null,
+	val size: Long? = null,
 
 	@field:SerializedName("FileExtension")
 	val fileExtension: String? = null,

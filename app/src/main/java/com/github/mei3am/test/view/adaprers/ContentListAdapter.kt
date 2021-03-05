@@ -14,7 +14,8 @@ import com.github.mei3am.test.view.customs.DataBoundListAdapter
 class ContentListAdapter (
     private val dataBindingComponent: DataBindingComponent,
     appExecutors: AppExecutors,
-    private val itemClickCallback: ((Content) -> Unit),
+    private val itemClickCallback: ((Content, Boolean, Int) -> Unit),
+    private val itemRemoveCallback: ((Content, Int, Boolean) -> Unit),
 ) : DataBoundListAdapter<Content, ContentItemBinding>(
         appExecutors = appExecutors,
         diffCallback = object : DiffUtil.ItemCallback<Content>() {
@@ -38,15 +39,21 @@ class ContentListAdapter (
         )
     }
 
-    override fun bind(binding: ContentItemBinding, item: Content) {
+    override fun bind(binding: ContentItemBinding, item: Content, position: Int) {
         binding.thumbImage = item.thumbImage
         binding.tvTitle.text = item.title
+        binding.cbFavorite.apply {
+            isChecked = item.favorite ?: false
+            setOnCheckedChangeListener { _, isChecked ->
+                itemRemoveCallback.invoke(item, position, isChecked)
+            }
+        }
         binding.tvZone.apply {
             val zoneRes = zone(item.zoneId!!)
             text = resources.getString(zoneRes)
         }
         binding.root.setOnClickListener {
-            itemClickCallback.invoke(item)
+            itemClickCallback.invoke(item, binding.cbFavorite.isChecked, position)
         }
     }
 

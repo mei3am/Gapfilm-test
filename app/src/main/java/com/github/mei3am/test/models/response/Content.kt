@@ -1,5 +1,6 @@
 package com.github.mei3am.test.models.response
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Index
 import com.google.gson.annotations.SerializedName
@@ -20,14 +21,14 @@ data class Result(
     @field:SerializedName("TotalPages")
     val totalPages: Int
 )
-
 @Entity(
-    indices = [
-        Index("contentId")],
+    tableName = "favorite",
+    indices = [Index(value = ["contentId"], unique = true)],
     primaryKeys = ["title"]
 )
 data class Content(
     @field:SerializedName("ContentID")
+    @ColumnInfo(name = "contentId")
     val contentId: Int,
 
     @field:SerializedName("Title")
@@ -39,5 +40,5 @@ data class Content(
     @field:SerializedName("ZoneID")
     val zoneId: Int?,
 
-    val favorite: Boolean?,
+    var favorite: Boolean = false,
 )

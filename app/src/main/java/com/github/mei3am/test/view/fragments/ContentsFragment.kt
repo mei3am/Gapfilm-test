@@ -15,9 +15,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.github.mei3am.test.AppExecutors
 import com.github.mei3am.test.R
 import com.github.mei3am.test.binding.FragmentDataBindingComponent
+import com.github.mei3am.test.constants.Constants
 import com.github.mei3am.test.constants.Status
 import com.github.mei3am.test.databinding.ContentsFragmentBinding
 import com.github.mei3am.test.interfaces.Injectable
+import com.github.mei3am.test.models.response.Content
+import com.github.mei3am.test.utils.Klog
 import com.github.mei3am.test.utils.autoCleared
 import com.github.mei3am.test.utils.toast
 import com.github.mei3am.test.view.adaprers.ContentListAdapter
@@ -54,20 +57,41 @@ class ContentsFragment: Fragment(), Injectable {
         }else{
             adapter.submitList(viewModel.contentList)
         }
-        findNavController().navigate(
-                MainFragmentDirections.
-                showContentDetailsFragment(contentId = 1))
+        findNavController().currentBackStackEntry?.savedStateHandle?.get<Int>(Constants.CHANGED_POSITION)?.let {
+            viewModel.contentList[it].favorite = (viewModel.contentList[it].favorite ?: false).not()
+            adapter.notifyItemChanged(it, viewModel.contentList[it])
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if(viewModel.contentList.isNotEmpty()){
+            loadListFromDb()
+        }
     }
 
     private fun initRv(){
         val rvAdapter = ContentListAdapter(
-            dataBindingComponent = dataBindingComponent,
-            appExecutors = appExecutors,
-        ) { content ->
-            findNavController().navigate(
-                MainFragmentDirections.
-                showContentDetailsFragment(contentId = content.contentId))
-        }
+                dataBindingComponent = dataBindingComponent,
+                appExecutors = appExecutors,
+                { // on item click
+                    content, favorite, position ->
+                    findNavController().navigate(
+                            MainFragmentDirections.
+                            showContentDetailsFragment(
+                                    contentId = content.contentId,
+                                    favorite = favorite,
+                                    position = position))
+                },
+                {   // favorite call back
+                    content, position, isChecked ->
+                    if (isChecked){
+                        insert(content, position)
+                    }else{
+                        delete(content, position)
+                    }
+                }
+        )
         binding.rvContent.adapter = rvAdapter
         this.adapter = rvAdapter
         binding.rvContent.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -100,6 +124,64 @@ class ContentsFragment: Fragment(), Injectable {
 
                     }
 
+                }
+            }
+        })
+    }
+
+    private fun delete(content: Content, position: Int){
+        viewModel.deleteFromFavoriteDbQuery(content.contentId, position).observe(viewLifecycleOwner, {
+            it?.let { resource ->
+                when (resource.status) {
+                    Status.SUCCESS -> {
+                        adapter.submitList(resource.data)
+                        adapter.notifyItemChanged(position, content)
+                    }
+                    Status.ERROR -> {
+                        toast(R.string.error)
+                    }
+                    Status.LOADING -> {
+                    }
+                }
+            }
+        })
+    }
+
+    private fun insert(content: Content, position: Int){
+        content.favorite = true
+        viewModel.insertToFavoriteDbQuery(content, position).observe(viewLifecycleOwner, {
+            it?.let { resource ->
+                when (resource.status) {
+                    Status.SUCCESS -> {
+                        adapter.submitList(resource.data)
+                        adapter.notifyItemChanged(position, content)
+                    }
+                    Status.ERROR -> {
+                        toast(R.string.error)
+                    }
+                    Status.LOADING -> {
+                    }
+                }
+            }
+        })
+    }
+
+    private fun loadListFromDb(){
+        viewModel.loadDbQuery().observe(viewLifecycleOwner, {
+            it?.let { resource ->
+                when (resource.status) {
+                    Status.SUCCESS -> {
+                        adapter.submitList(viewModel.contentList)
+                        Klog.e("changed list "+resource.data)
+                        resource.data?.forEach { changedPosition ->
+                            adapter.notifyItemChanged(changedPosition)
+                        }
+                    }
+                    Status.ERROR -> {
+                        toast(R.string.error)
+                    }
+                    Status.LOADING -> {
+                    }
                 }
             }
         })
