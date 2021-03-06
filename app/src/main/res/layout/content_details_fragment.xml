@@ -36,7 +36,8 @@
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-                    app:layout_scrollFlags="scroll|enterAlways">
+                    app:layout_scrollFlags="enterAlways"
+                    app:layout_collapseMode="pin">
                     <ImageButton
                         android:id="@+id/ib_back"
                         android:layout_width="wrap_content"

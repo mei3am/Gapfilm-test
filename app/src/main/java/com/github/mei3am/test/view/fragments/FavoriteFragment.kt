@@ -17,9 +17,7 @@ import com.github.mei3am.test.constants.Status
 import com.github.mei3am.test.databinding.ContentsFragmentBinding
 import com.github.mei3am.test.interfaces.Injectable
 import com.github.mei3am.test.models.response.Content
-import com.github.mei3am.test.utils.Klog
-import com.github.mei3am.test.utils.autoCleared
-import com.github.mei3am.test.utils.toast
+import com.github.mei3am.test.utils.*
 import com.github.mei3am.test.view.adaprers.ContentListAdapter
 import com.github.mei3am.test.viewModel.FavoriteViewModel
 import javax.inject.Inject
@@ -83,16 +81,16 @@ class FavoriteFragment: Fragment(), Injectable {
             it?.let { resource ->
                 when (resource.status) {
                     Status.SUCCESS -> {
-                        binding.progress.root.visibility = View.GONE
+                        binding.progress.root.gone()
                         adapter.submitList(viewModel.contentList)
                         adapter.notifyDataSetChanged()
                     }
                     Status.ERROR -> {
-                        binding.progress.root.visibility = View.GONE
+                        binding.progress.root.gone()
                         toast(R.string.error_in_connection)
                     }
                     Status.LOADING -> {
-                        binding.progress.root.visibility = View.VISIBLE
+                        binding.progress.root.visible()
 
                     }
 

@@ -14,9 +14,10 @@ import javax.inject.Inject
 
 class ContentsViewModel @Inject constructor(private val appService: AppServices, private val appDb: AppDb): ViewModel() {
     val contentList = mutableListOf<Content>()
-    val favoriteList = mutableListOf<Content>()
     var isLoadData = false
+    private val favoriteList = mutableListOf<Content>()
     private var pageIndex: Int = 1
+
     fun contentQuery() = liveData(Dispatchers.IO) {
         isLoadData = true
         emit(Resource.loading(data = null))
@@ -98,12 +99,5 @@ class ContentsViewModel @Inject constructor(private val appService: AppServices,
             Klog.e(exception)
             emit(Resource.error(data = null, message = null))
         }
-    }
-
-    private fun listDiff(list1: List<Content>, list2: List<Content>): List<Content>{
-        val sum = list1 + list2
-        return sum.groupBy { it.contentId }
-                .filter { it.value.size == 1 }
-                .flatMap { it.value }
     }
 }

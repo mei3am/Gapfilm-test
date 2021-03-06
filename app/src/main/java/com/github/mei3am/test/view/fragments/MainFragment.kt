@@ -6,16 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
-import androidx.viewpager2.widget.ViewPager2
 import com.github.mei3am.test.AppExecutors
 import com.github.mei3am.test.R
 import com.github.mei3am.test.databinding.MainFragmentBinding
 import com.github.mei3am.test.interfaces.Injectable
 import com.github.mei3am.test.utils.autoCleared
 import com.github.mei3am.test.view.adaprers.FragmentViewPagerAdapter
-import com.github.mei3am.test.viewModel.MainViewModel
 import com.google.android.material.tabs.TabLayoutMediator
 import javax.inject.Inject
 
@@ -26,9 +23,6 @@ class MainFragment: Fragment(), Injectable {
     @Inject
     lateinit var appExecutors: AppExecutors
     var binding by autoCleared<MainFragmentBinding>()
-    private val viewModel: MainViewModel by viewModels {
-        viewModelFactory
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

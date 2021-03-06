@@ -24,7 +24,9 @@ import com.github.mei3am.test.interfaces.Injectable
 import com.github.mei3am.test.models.response.Content
 import com.github.mei3am.test.models.response.ContentDetailsResponse
 import com.github.mei3am.test.utils.autoCleared
+import com.github.mei3am.test.utils.gone
 import com.github.mei3am.test.utils.toast
+import com.github.mei3am.test.utils.visible
 import com.github.mei3am.test.viewModel.ContentsDetailsViewModel
 import javax.inject.Inject
 import kotlin.math.roundToInt
@@ -103,17 +105,17 @@ class ContentDetailsFragment: Fragment(), Injectable {
             it?.let { resource ->
                 when (resource.status) {
                     Status.SUCCESS -> {
-                        binding.progress.root.visibility = View.GONE
-                        binding.cbFavorite.visibility = View.VISIBLE
+                        binding.progress.root.gone()
+                        binding.cbFavorite.visible()
                         setUi(resource.data)
                     }
                     Status.ERROR -> {
-                        binding.progress.root.visibility = View.GONE
+                        binding.progress.root.gone()
                         toast(R.string.error_in_connection)
                     }
                     Status.LOADING -> {
-                        binding.progress.root.visibility = View.VISIBLE
-                        binding.cbFavorite.visibility = View.GONE
+                        binding.progress.root.visible()
+                        binding.cbFavorite.gone()
 
                     }
                 }
